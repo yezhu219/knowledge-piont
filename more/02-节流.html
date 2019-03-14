@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数节流</title>
+</head>
+
+<body>
+  <button>节流</button>
+  <script>
+    var btn = document.querySelector('button')
+    btn.addEventListener('click', throttle(log, 1000))
+
+    function throttle(fn, wait) {
+      var can = true
+      return function () {
+        if (!can) return
+        can = false
+        var timer = setTimeout(() => {
+          fn.call(this, arguments)
+          can = true
+        }, wait)
+      }
+    }
+
+    function log() {
+      console.log("节流")
+    }
+  </script>
+</body>
+
+</html>
