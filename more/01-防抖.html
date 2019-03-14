@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>防抖</button>
+  <script>
+    var btn = document.querySelector('button')
+    btn.addEventListener('click', debounce(log))
+
+    function debounce(fn) {
+      var timer = null
+      return function () {
+        clearTimeout(timer) //清除定时器，重新计时，如果点击事件小于间隔时间，就会清除定时器重新开始计时
+        timer = setTimeout(() => {
+          fn.call(this, arguments)
+        }, 1000)
+      }
+    }
+
+    function log() {
+      console.log("aaaaaa")
+    }
+  </script>
+</body>
+
+</html>
