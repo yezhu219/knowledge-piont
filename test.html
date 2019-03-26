@@ -6,11 +6,26 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>防抖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 200px;
+      height: 300px;
+      background-color: #ccc;
+      position: absolute;
+      left: 200px;
+      top: 100px;
+    }
+  </style>
 </head>
 
 <body>
   <button id="debounce">点我防抖！</button>
-
+  <div class="box"></div>
   <script>
     window.onload = function () {
       // 1、获取这个按钮，并绑定事件
@@ -43,6 +58,12 @@
     btn.focus()
     var active = document.activeElement
     console.log(active.tagName)
+    btn.scrollIntoView()
+
+    let box = document.querySelector(".box")
+    let position = box.getBoundingClientRect()
+    let aa = box.getClientRects()
+    console.log(aa, position)
   </script>
 </body>
 
