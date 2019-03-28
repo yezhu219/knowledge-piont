@@ -4,7 +4,7 @@
 - `class`类存在时可以使用 `:class`继续绑定类
 - 对象形式时键名需要加引号
 - 如果对象形式的类名比较多，可以是定义一个对象，通过计算属性进行计算
- ```js
+ ```vue
  <template>
   <div>
     <p class="one" :class="{'big':istwo,'three':isthree }">测试文字</p>
@@ -38,13 +38,13 @@ export default {
   font-size: 20px;
 }
 </style>
-```
+ ```
 
 
-## 数组语法
+## 2. 数组语法
 - 数组语法中也可以使用对象语法
 - 可以使用三元表达式
-```js
+```vue
 <template>
   <div>
     <p class="one" :class="{'big':istwo,'three':isthree }">测试文字</p>
