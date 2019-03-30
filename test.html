@@ -54,16 +54,24 @@
       // ... 有些需要防抖的工作，在这里执行
       console.log("防抖成功！");
     }
-    var btn = document.querySelector('button')
-    btn.focus()
-    var active = document.activeElement
-    console.log(active.tagName)
-    btn.scrollIntoView()
+    // var btn = document.querySelector('button')
+    // btn.focus()
+    // var active = document.activeElement
+    // console.log(active.tagName)
+    // btn.scrollIntoView()
 
-    let box = document.querySelector(".box")
-    let position = box.getBoundingClientRect()
-    let aa = box.getClientRects()
-    console.log(aa, position)
+    // let box = document.querySelector(".box")
+    // let position = box.getBoundingClientRect()
+    // let aa = box.getClientRects()
+    // console.log(aa, position)
+
+
+    // map 与filter区别
+    let arr = [1, 2, 3, 4, 5, 5, 6, 7]
+    let arr1 = arr.map(item => item > 1)
+    let arr2 = arr.filter(item => item > 1)
+    console.log(arr1)
+    console.log(arr2)
   </script>
 </body>
 
