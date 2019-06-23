@@ -2,7 +2,7 @@
 const sha1 = require('sha1')
 const rawBody = require('raw-body')
 const utils = require('./utils')
-module.exports = (config) => {
+module.exports = (config, reply) => {
   return async (ctx) => {
     const {
       signature,
@@ -14,6 +14,9 @@ module.exports = (config) => {
     let str = [token, timestamp, nonce].sort().join('')
 
     const sha = sha1(str)
+    //验证消息是否来自微信服务器
+    //get请求是验证消息，post请求是微信服务器推送的消息
+
     if (ctx.method == 'GET') {
       if (sha == signature) {
         ctx.body = echostr
@@ -24,27 +27,20 @@ module.exports = (config) => {
       if (sha !== signature) {
         return ctx.body = 'wrong'
       }
+      // rawBody解析xml，把xml解析成未对象
       const data = await rawBody(ctx.req, {
         limit: '2mb',
         length: ctx.length,
         encoding: ctx.charset
       })
-      console.log('data', data)
       const content = await utils.parseXML(data)
-      console.log('content')
-      console.log(content)
       const message = utils.formate(content.xml)
-      console.log('message')
-      console.log(message)
+      ctx.wchat = message
+      await reply.apply(ctx, [ctx, next])
+      const xml = utils.tpl(ctx.body, message)
       ctx.status = 200
       ctx.type = 'application/xml'
-      ctx.body = `<xml>
-        <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
-        <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
-        <CreateTime>${parseInt(new Date().getTime()/1000+'')}</CreateTime>
-        <MsgType><![CDATA[text]]></MsgType>
-        <Content><![CDATA[${message.Content}-----from:wechat]]></Content>
-      </xml>`
+      ctx.body = xml
     }
   }
 }

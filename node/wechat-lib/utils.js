@@ -1,5 +1,5 @@
 const xml2js = require('xml2js')
-
+const template = require('./tpl')
 
 exports.parseXML = xml => {
   return new Promise((resolve, reject) => {
@@ -21,8 +21,6 @@ const formate = result => {
     for (let i = 0; i < keys.length; i++) {
       let item = result[keys[i]]
       let key = keys[i]
-      console.log('item')
-      console.log(item)
       if (!(item instanceof Array) || item.length === 0) {
         continue
       }
@@ -41,9 +39,27 @@ const formate = result => {
       }
     }
     return message
-
   }
 
 
 }
-module.exports.formate = formate
+exports.formate = formate
+
+exports.tpl = (content, msg) => {
+  let type = 'text'
+  if (Array.isArray(content)) {
+    type = 'news'
+  }
+  if (!content) content = 'null'
+  if (content && content.type) {
+    type = content.type
+  }
+  const info = Object.assign({}, {
+    content: content,
+    msgType: type,
+    createTime: new Date().getTime(),
+    toUserName: message.FromUserName,
+    fromUserName: message.ToUserName
+  })
+  return template(info)
+}
