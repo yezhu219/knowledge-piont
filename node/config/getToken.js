@@ -1,11 +1,18 @@
 const req = require('request-promise')
-const baseurl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&'
+const baseurl = 'https://api.weixin.qq.com/cgi-bin/'
+
+
+const api = {
+  accessToken: baseurl + `token?grant_type=client_credential&appid=${this.appID}&secret=${this.appsecret}`
+}
 
 module.exports = class wechat {
   constructor(option) {
     this.option = Object.assign({}, option)
     this.appID = option.appID
     this.appsecret = option.appsecret
+    this.getAccessToken = option.getAccessToken
+    this.saveAccessToken = option.saveAccessToken
 
     this.fentchAccessToken()
   }
@@ -21,25 +28,26 @@ module.exports = class wechat {
       console.log(err)
     }
   }
+  //先检查数据库中的token,检查token是否存在或者过期
   async fentchAccessToken() {
-    let data
-    if (this.getAccessToken) {
-      data = await this.getAccessToken()
-    }
+    //获取数据库中的token
+    let data = await this.getAccessToken()
     if (!this.checkToken(data)) {
-      this.updataAccessToken()
+      data = await this.updataAccessToken()
     }
+    //将token保存入数据库
+
+    await this.saveAccessToken(data)
     return data
   }
   async updataAccessToken() {
-    const uri = baseurl + `appid=${this.appID}&secret=${this.appsecret}`
+    const uri = baseurl + `token?grant_type=client_credential&appid=${this.appID}&secret=${this.appsecret}`
     const data = await this.request({
       uri
     })
     const now = new Date().getTime()
     const expiresIn = now + (data.expires_in - 60) * 1000
     data.expires_in = expiresIn
-    console.log(data)
     return data
   }
   checkToken(data) {

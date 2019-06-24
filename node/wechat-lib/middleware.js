@@ -36,11 +36,18 @@ module.exports = (config, reply) => {
       const content = await utils.parseXML(data)
       const message = utils.formate(content.xml)
       ctx.wchat = message
-      await reply.apply(ctx, [ctx, next])
-      const xml = utils.tpl(ctx.body, message)
+      // await reply.apply(ctx, [ctx, next])
+      // const xml = utils.tpl(ctx.body, message)
       ctx.status = 200
       ctx.type = 'application/xml'
-      ctx.body = xml
+      ctx.body = `
+      <xml>
+        <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
+        <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
+        <CreateTime>${parseInt(new Date().getTime()/1000+'')}</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[${message.Content}-----from:wechat]]></Content>
+      </xml>`
     }
   }
 }

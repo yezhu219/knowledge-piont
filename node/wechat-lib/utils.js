@@ -13,8 +13,7 @@ exports.parseXML = xml => {
 }
 
 const formate = result => {
-  console.log('result')
-  console.log(result)
+
   let message = {}
   if (typeof result === 'object') {
     const keys = Object.keys(result)
