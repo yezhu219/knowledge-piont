@@ -1,9 +1,10 @@
 const Wechat = require('./getToken')
 const {
   wechat
-} = require('./config');
+} = require('./config')
 
 const mongoose = require('mongoose')
+
 const Token = mongoose.model('Token')
 
 const wechatConfig = {

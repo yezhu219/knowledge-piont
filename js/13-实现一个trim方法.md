@@ -23,3 +23,4 @@ function myTrim(str) {
     var str = myTrim(str)
     console.log(str, str.length)
 ```
+
