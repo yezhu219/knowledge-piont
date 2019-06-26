@@ -5,6 +5,7 @@ const {
   initSchema,
   connect
 } = require('./database/init')
+const { getTickt} = require('./wechat/qr')
 
 ;
 (async () => {
@@ -14,9 +15,11 @@ const {
   const {
     test
   } = require('./config/index')
-  test()
-  // let token = test()
-  // console.log('tokenIndex', token)
+  // test()
+  let token = test()
+  console.log('tokenIndex', token)
+  let ticket = await getTickt(token.token)
+  console.log(ticket)
   const app = new Koa()
   // 加载中间件
   app.use(wechat(config.wechat))
