@@ -14,7 +14,7 @@ module.exports = class wechat {
     this.getAccessToken = option.getAccessToken
     this.saveAccessToken = option.saveAccessToken
 
-    this.fentchAccessToken()
+    // this.fentchAccessToken()
   }
   async request(opt) {
     opt = Object.assign({}, opt, {
@@ -34,9 +34,12 @@ module.exports = class wechat {
     let data = await this.getAccessToken()
     if (!this.checkToken(data)) {
       data = await this.updataAccessToken()
+      console.log('request ---token')
+      console.log(data)
     }
     //将token保存入数据库
-
+    console.log('fentchdata')
+    console.log(data)
     await this.saveAccessToken(data)
     return data
   }
@@ -46,6 +49,7 @@ module.exports = class wechat {
       uri
     })
     const now = new Date().getTime()
+
     const expiresIn = now + (data.expires_in - 60) * 1000
     data.expires_in = expiresIn
     return data

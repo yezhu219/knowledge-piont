@@ -19,9 +19,7 @@ const TokenSchema = new Schema({
 })
 
 TokenSchema.pre('save', function (next) { //这里不能使用箭头函数，this指向了{}
-  console.log('this-----')
-  console.log(this)
-  console.log(this.isNew)
+ 
   if (this.isNew) {
     this.meta.createdAt = this.meta.updatedAt = Date.now()
   } else {
@@ -36,6 +34,7 @@ TokenSchema.pre('save', function (next) { //这里不能使用箭头函数，thi
 
 TokenSchema.statics = {
   async getAccessToken() {
+    console.log('tokenSchema--getAccessToken')
     const token = await this.findOne({
       name: 'access_token'
     })
@@ -46,13 +45,11 @@ TokenSchema.statics = {
     return token
   },
   async saveAccessToken(data) {
+    console.log('tokenSchema--saveAccessToken')
     let token = await this.findOne({
       name: 'access_token'
     })
-    console.log('token')
-    console.log(token)
-    console.log('data')
-    console.log(data)
+  
     if (token && token.token) {
       token.access_token = data.access_token
       token.expires_in = data.expires_in

@@ -10,12 +10,14 @@ const { getTickt,showQr} = require('./wechat/qr')
 ;
 (async () => {
   await connect(config.db)
+  console.log('dbconnect----')
   initSchema()
-
+  console.log('initSchema-----')
   const { test } = require('./config/index')
   // test()
   let token = await test()
   console.log('tokenIndex', token)
+  console.log('ticket')
   //获取ticket
   let ticket = await getTickt(token.token)
   console.log(ticket)
