@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // let str='http://localhost:6207/makePlan?productId=PRO20190411000007&theme=green&from=index'
+    // let reg=/&theme=(\S*)&/
+    // let res = str.match(reg)
+    // let reg = /\?productId=(\S*)&/  //PRO20190411000007&theme=green
+    // let reg = /\?productId=(\S*?)&/  //贪婪模式，PRO20190411000007
+    // let res = str.match(reg)
+    // console.log(res)
+
+    // let str2 = '发布时间：2018-06-23 11:56:10 信息关注度：2333人次'
+    // let reg2 = /(?<=发布时间：).+(?= 信息关注度)/
+    // let res2 = str2.match(reg2)
+    // console.log(res2)
+    let str = ' 万元                        (8227.85元/㎡)'
+    let reg = /(?<=\().+(?=元)/
+    console.log(str.match(reg))
+  </script>
+</body>
+</html>
